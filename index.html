@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PyQuest — Aprenda Python</title>
+<style>
+:root{color-scheme:dark;--tx:#eceaf7;--mu:#8f8aa8;--bd:#ffffff14;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;color:var(--tx);font:15px/1.45 "Segoe UI",system-ui,sans-serif;background:radial-gradient(600px 420px at 100% 0,#4a22c055,transparent 70%),radial-gradient(520px 420px at 100% 62%,#c2570c3d,transparent 70%),#05030a;background-attachment:fixed;min-height:100vh}
+small{color:var(--mu)}
+h2{margin:0;font-size:1.35rem;font-weight:600}
+h3{margin:0 0 4px;font-size:1.02rem;font-weight:600}
+.sb{position:fixed;left:10px;top:calc(10px + env(safe-area-inset-top,0px));bottom:calc(10px + env(safe-area-inset-bottom,0px));width:54px;background:linear-gradient(160deg,#ffffff0c,#ffffff04);border:1px solid var(--bd);border-radius:18px;display:flex;flex-direction:column;align-items:center;gap:8px;padding:12px 0;backdrop-filter:blur(12px);z-index:5}
+.sb button{width:40px;height:40px;border:0;border-radius:12px;background:transparent;color:#8f8aa8;display:grid;place-items:center;cursor:pointer}
+.sb button.on{background:#7c5cff30;color:#b9a6ff;box-shadow:0 0 14px #7c5cff55}
+.sb svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.sb .lg{margin-top:auto;font-size:.62rem;color:var(--mu);writing-mode:vertical-rl;letter-spacing:1px}
+main{margin-left:72px;padding:12px 12px 24px 6px;max-width:700px}
+.top{display:flex;justify-content:space-between;align-items:flex-end;gap:8px;margin:4px 0 12px}
+.top small{text-transform:capitalize}
+.chips{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.chips span{background:#ffffff0d;border:1px solid var(--bd);border-radius:20px;padding:3px 10px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.w2{grid-column:span 2}
+.c{background:linear-gradient(145deg,#ffffff0d,#ffffff04);border:1px solid var(--bd);border-radius:18px;padding:14px;backdrop-filter:blur(10px);min-width:0}
+.mb{margin-bottom:10px}
+.pill{float:right;background:#ffffff10;border-radius:10px;padding:3px 9px;font-size:.8rem}
+.hello{font-size:1.5rem;font-weight:600;margin:10px 0 2px}
+.sp{width:100%;height:64px;display:block;margin-top:8px}
+.num{font-size:2.3rem;font-weight:600;line-height:1.1;margin:6px 0}
+.num span{font-size:1rem;color:var(--mu)}
+.dots{display:flex;gap:5px;margin-top:8px}
+.dots i{flex:1;height:8px;border-radius:4px;background:#ffffff14}
+.dots i.on{background:linear-gradient(90deg,#60a5fa,#a855f7)}
+.bar{height:6px;background:#ffffff14;border-radius:6px;overflow:hidden;margin:8px 0}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,#60a5fa,#a855f7);transition:width .3s}
+.ae{display:flex;align-items:center;gap:14px}
+.ae p{margin:3px 0;font-size:.92rem}
+.stk{display:flex;height:8px;border-radius:6px;overflow:hidden;background:#ffffff12;margin-top:12px}
+.stk i{background:linear-gradient(90deg,#60a5fa,#8b5cf6)}
+.stk b{background:linear-gradient(90deg,#fb923c,#f59e0b)}
+.wr{display:grid;grid-template-columns:84px 1fr auto;gap:8px;align-items:center;margin:8px 0}
+.wr span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tr2{height:8px;background:#ffffff10;border-radius:8px;overflow:hidden}
+.tr2 i{display:block;height:100%;background:linear-gradient(90deg,#fb923c,#f59e0b);border-radius:8px}
+.tr2.g i{background:linear-gradient(90deg,#60a5fa,#8b5cf6)}
+.wb{display:flex;gap:6px;height:130px;margin-top:8px}
+.col{flex:1;display:flex;flex-direction:column;align-items:center;height:100%;gap:3px}
+.col .v{font-size:.75rem;height:14px}
+.tr{flex:1;width:10px;background:#ffffff10;border-radius:8px;display:flex;align-items:flex-end;overflow:hidden}
+.tr i{width:100%;background:linear-gradient(#60a5fa,#8b5cf6);border-radius:8px}
+button{font:inherit;color:var(--tx);cursor:pointer}
+button:focus-visible,input:focus-visible{outline:2px solid #b9a6ff;outline-offset:2px}
+.btn{width:100%;background:linear-gradient(135deg,#6d4aff,#a855f7);border:0;border-radius:12px;padding:12px;font-weight:600;margin-top:12px}
+.btn.sm{width:auto;padding:7px 12px;margin-top:8px;font-size:.88rem}
+.btn:disabled{background:#ffffff12;color:var(--mu);cursor:default}
+.row{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:transparent;border:0;border-top:1px solid var(--bd);padding:11px 2px;margin-top:6px}
+.row:first-of-type{margin-top:8px}
+.row>span:nth-child(2){flex:1}
+.row:disabled{opacity:.45;cursor:default}
+.row em{font-style:normal;font-size:.8rem;color:var(--mu)}
+.row em.s2{color:#fbbf24}
+.ck{width:18px;height:18px;border-radius:50%;border:2px solid #ffffff30;flex:none;position:relative}
+.dn .ck{background:#3b82f6;border-color:#3b82f6}
+.dn .ck::after{content:"";position:absolute;left:4px;top:1px;width:4px;height:8px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
+.op{display:block;width:100%;text-align:left;background:#ffffff0a;border:1px solid var(--bd);border-radius:12px;padding:12px;margin-top:8px}
+.op.ok{background:#12351f;border-color:#34d399}
+.op.bad{background:#3a1220;border-color:#fb7185}
+input{width:100%;background:#ffffff0a;border:1px solid var(--bd);border-radius:12px;padding:12px;color:var(--tx);font:inherit;margin-top:8px}
+.code{background:#030108;border:1px solid var(--bd);border-radius:12px;padding:12px;margin:10px 0;overflow-x:auto;font:13.5px/1.5 ui-monospace,Menlo,Consolas,monospace;min-height:80px;white-space:pre}
+.cur::after{content:"▍";animation:bl 1s steps(1) infinite}
+@keyframes bl{50%{opacity:0}}
+.fx0{color:#c4b5fd}
+.fx1{color:#39ff14;text-shadow:0 0 8px #39ff14}
+.fx2{color:#ff9a3c;text-shadow:0 0 8px #ff4500}
+.fx3{color:#7df9ff;text-shadow:0 0 8px #00bfff}
+.fx5{color:#fbbf24;text-shadow:0 0 8px #b45309}
+.fx4,.fx6{-webkit-background-clip:text;background-clip:text;color:transparent;background-size:300%;animation:rb 3s linear infinite}
+.fx4{background-image:linear-gradient(90deg,#f0f,#0ff,#ff0,#f0f)}
+.fx6{background-image:linear-gradient(90deg,#8b5cf6,#38bdf8,#f472b6,#8b5cf6)}
+@keyframes rb{to{background-position:300% 0}}
+.fb{margin-top:10px;padding:10px;border-radius:12px;background:#ffffff0a;border:1px solid var(--bd)}
+.it{text-align:center}
+.ex h4{margin:16px 0 4px;color:#b9a6ff;font-size:.95rem}.ex p{margin:4px 0}.ex ul{padding-left:18px;margin:4px 0}.ex li{margin:3px 0}.ex .code{min-height:0}
+textarea{width:100%;background:#030108;border:1px solid var(--bd);border-radius:12px;color:#c4b5fd;font:13.5px/1.5 ui-monospace,Menlo,Consolas,monospace;padding:10px;margin:6px 0;tab-size:4;resize:vertical}
+#ed{height:220px}
+.term pre{margin:6px 0 0;color:#a7f3d0;font:13.5px/1.5 ui-monospace,Menlo,Consolas,monospace;white-space:pre-wrap;min-height:80px;word-break:break-word}
+.it .code{min-height:0;padding:8px;text-align:left}
+.it.eq{border-color:#a78bfa;box-shadow:0 0 14px #7c5cff44}
+#toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:#2b1a4d;border:1px solid #a78bfa;padding:8px 14px;border-radius:12px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:9}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+<nav class="sb" aria-label="Menu">
+<button id="n-home" title="Painel" aria-label="Painel" onclick="go('home')"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10"/></svg></button>
+<button id="n-paths" title="Trilhas" aria-label="Trilhas" onclick="go('paths')"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg></button>
+<button id="n-train" title="Treino" aria-label="Treino" onclick="go('train')"><svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></button>
+<button id="n-term" title="Terminal" aria-label="Terminal" onclick="go('term')"><svg viewBox="0 0 24 24"><path d="M4 17l6-5-6-5M12 19h8"/></svg></button>
+<button id="n-shop" title="Loja" aria-label="Loja" onclick="go('shop')"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6zM9 8a3 3 0 016 0"/></svg></button>
+<span class="lg">PYQUEST</span>
+</nav>
+<main id="app"></main>
+<div id="toast"></div>
+<script>
+const P=[
+{p:"Primeiros Passos",d:"Comece do zero: saída, variáveis e entrada.",ls:[
+{t:"print e comentários",e:"<b>print()</b> mostra algo na tela. Textos (strings) ficam entre aspas. Tudo depois de <b>#</b> é comentário: o Python ignora.",c:`# meu primeiro programa
+print("Olá, mundo!")
+print(2 + 3)`,q:[["Qual função mostra texto na tela?",["show()","print()","echo()"],1,"print() é a função de saída do Python."],["Para que serve o #?",["Criar um comentário","Somar números","Abrir arquivo"],0,"O Python ignora tudo depois do #."],["O que aparece com print(2 + 3)? Digite.",null,"5","A conta é feita antes de mostrar."]]},
+{t:"Variáveis e tipos",e:"Uma <b>variável</b> guarda um valor: <b>nome = valor</b>. Tipos comuns: int (5), float (3.14), str (texto) e bool (True/False). Use type() para ver o tipo.",c:`nome = "Ana"
+idade = 15
+altura = 1.62
+ativo = True
+print(nome, type(idade))`,q:[["Qual é o tipo de 3.14?",["int","float","str"],1,"Números com ponto são float."],["Qual nome de variável é válido?",["2nome","meu-nome","meu_nome"],2,"Não pode começar com número nem ter hífen."],["x = 4, depois x = x + 1. Quanto vale x? Digite.",null,"5","x passa a ser 4 + 1."]]},
+{t:"input e operadores",e:"<b>input()</b> lê o que a pessoa digita, sempre como texto. Converta com int() ou float(). Operadores: + - * / // (divisão inteira) % (resto) ** (potência).",c:`n = int(input("Número: "))
+print(n ** 2)
+print(n % 2)`,q:[["Quanto é 10 % 3? Digite.",null,"1","10 dividido por 3 dá 3 e sobra 1."],["Que tipo o input() devolve?",["int","str","float"],1,"Sempre str, por isso usamos int()."],["Quanto é 2 ** 3?",["6","8","9"],1,"2 elevado a 3 = 8."]]}]},
+{p:"Decisões e Loops",d:"Faça o programa escolher e repetir.",ls:[
+{t:"if, elif e else",e:"<b>if</b> executa código só se a condição for verdadeira. Use <b>elif</b> e <b>else</b> para outros casos. A indentação (4 espaços) é obrigatória. Compare com == != &lt; &gt; &lt;= &gt;=.",c:`idade = 16
+if idade >= 18:
+    print("Adulto")
+elif idade >= 12:
+    print("Adolescente")
+else:
+    print("Criança")`,q:[["Qual operador compara igualdade?",["=","==","=>"],1,"= atribui, == compara."],["O que imprime com idade = 16?",["Adulto","Adolescente","Criança"],1,"16 >= 12 e não é >= 18."],["O Python marca blocos com...",["Chaves {}","Indentação","begin/end"],1,"A indentação define o bloco."]]},
+{t:"Loop for",e:"<b>for</b> repete para cada item. <b>range(n)</b> gera de 0 até n-1. <b>range(1, 4)</b> gera 1, 2, 3.",c:`for i in range(3):
+    print("Volta", i)
+
+for letra in "Py":
+    print(letra)`,q:[["O que range(3) gera?",["1,2,3","0,1,2","0,1,2,3"],1,"Começa em 0 e para antes do 3."],["Quantas voltas dá for i in range(5)? Digite.",null,"5","0, 1, 2, 3 e 4."],["for letra in 'Py' passa por...",["P e y","só P","Py inteiro"],0,"Strings são percorridas letra por letra."]]},
+{t:"Loop while",e:"<b>while</b> repete enquanto a condição for verdadeira. Cuidado com loop infinito! <b>break</b> sai do loop e <b>continue</b> pula para a próxima volta.",c:`n = 3
+while n > 0:
+    print(n)
+    n -= 1
+print("Fogo!")`,q:[["O que o break faz?",["Pausa 1 segundo","Sai do loop","Reinicia o loop"],1,"break encerra o loop na hora."],["No código acima, qual o valor final de n? Digite.",null,"0","n diminui até 0 e o loop para."],["Quando acontece um loop infinito?",["A condição nunca fica falsa","Usamos range","Usamos print"],0,"Sem mudar a condição, o while nunca termina."]]}]},
+{p:"Funções",d:"Organize e reutilize seu código.",ls:[
+{t:"Criando funções",e:"Uma <b>função</b> é um bloco reutilizável. Defina com <b>def</b> e chame pelo nome com parênteses. <b>return</b> devolve um resultado.",c:`def saudar(nome):
+    return "Oi, " + nome
+
+print(saudar("Lia"))`,q:[["Qual palavra cria uma função?",["func","def","function"],1,"No Python é def."],["O return serve para...",["Devolver um valor","Repetir código","Comentar"],0,"return entrega o resultado a quem chamou."],["def dobro(x): return x * 2. Quanto é dobro(4)? Digite.",null,"8","4 * 2 = 8."]]},
+{t:"Parâmetros e escopo",e:"<b>Parâmetros</b> recebem valores e podem ter valor padrão: def f(x, y=2). Variáveis criadas dentro da função só existem nela (escopo local).",c:`def potencia(base, exp=2):
+    return base ** exp
+
+print(potencia(3))
+print(potencia(2, 5))`,q:[["Quanto é potencia(3)? Digite.",null,"9","exp vale 2 por padrão: 3 ** 2."],["Quanto é potencia(2, 5)? Digite.",null,"32","2 ** 5 = 32."],["Uma variável criada dentro da função existe...",["Em todo o programa","Só dentro dela","Só no print"],1,"Esse é o escopo local."]]}]},
+{p:"Estruturas de Dados",d:"Guarde muitos valores de forma inteligente.",ls:[
+{t:"Listas",e:"<b>Lista</b> guarda vários itens em ordem: [1, 2, 3]. Os índices começam em 0. Métodos: append() adiciona, remove() tira e len() conta.",c:`frutas = ["maçã", "uva"]
+frutas.append("kiwi")
+print(frutas[0])
+print(len(frutas))`,q:[["Qual o índice do primeiro item?",["0","1","-1"],0,"Python começa a contar do 0."],["Quanto vale len(frutas) no código acima? Digite.",null,"3","Eram 2 e entrou o kiwi."],["Qual método adiciona no fim da lista?",["add","append","push"],1,"append() adiciona ao final."]]},
+{t:"Dicionários",e:"<b>Dicionário</b> guarda pares chave: valor. Acesse pela chave. Use .items() para percorrer tudo.",c:`aluno = {"nome": "Bia", "nota": 9}
+aluno["idade"] = 14
+for k, v in aluno.items():
+    print(k, v)`,q:[["Como acessar a nota do aluno?",["aluno[1]","aluno['nota']","aluno.nota()"],1,"Use a chave entre colchetes."],["Um dicionário guarda...",["Pares chave: valor","Só números","Só índices 0,1,2"],0,"Cada valor tem uma chave."],["{'a': 1, 'b': 2} tem quantos itens? Digite.",null,"2","Duas chaves, dois itens."]]}]},
+{p:"Classes e Erros",d:"Crie objetos e trate falhas como profissional.",ls:[
+{t:"Classes e objetos",e:"<b>Classe</b> é o molde de um objeto. <b>__init__</b> roda ao criar e guarda dados em <b>self</b>. Métodos são funções da classe.",c:`class Dragao:
+    def __init__(self, nome):
+        self.nome = nome
+        self.vida = 100
+    def rugir(self):
+        print(self.nome, "ruge!")
+
+d = Dragao("Drako")
+d.rugir()`,q:[["Qual palavra cria uma classe?",["class","object","new"],0,"No Python usamos class."],["O __init__ serve para...",["Apagar o objeto","Iniciar o objeto","Importar módulos"],1,"É o construtor."],["Quanto vale d.vida no código acima? Digite.",null,"100","Definido no __init__."]]},
+{t:"try e except",e:"<b>try/except</b> evita que o programa quebre com erros. Coloque o código arriscado no try e a reação no except. <b>finally</b> roda sempre.",c:`try:
+    n = int("abc")
+except ValueError:
+    print("Isso não é número!")
+finally:
+    print("Fim")`,q:[["O que o except faz?",["Trata o erro","Cria o erro","Repete o código"],0,"Ele captura o erro e reage."],["int('abc') gera qual erro?",["ValueError","KeyError","NameError"],0,"O valor não pode virar inteiro."],["O finally roda...",["Só com erro","Só sem erro","Sempre"],2,"Com ou sem erro."]]}]}
+];
+
+const X=[
+[["Qual destes imprime texto?",['print("oi")','imprimir("oi")','say("oi")'],0,"Use print.","print"],["O que mostra print('a' + 'b')? Digite.",null,"ab","Strings se juntam.","string"],["Texto entre aspas é do tipo...",["str","int","bool"],0,"str é texto.","string"],["Qual linha é só um comentário?",["# anotar","print(#)","// anotar"],0,"Comentário começa com #.","comentário"],["O que mostra print('Oi' * 2)? Digite.",null,"oioi","Multiplicar repete o texto.","string"],["print(Olá) sem aspas gera qual erro?",["NameError","SyntaxWarning","Nenhum"],0,"Olá vira um nome inexistente.","print"]],
+[["Qual é o tipo de True?",["bool","str","int"],0,"True e False são bool.","bool"],["Qual comando mostra o tipo de x?",["type(x)","kind(x)","typeof(x)"],0,"Use type().","tipo"],["a = 5, b = a, a = 9. Quanto vale b? Digite.",null,"5","b guardou o valor 5.","variável"],["Qual cria uma variável com texto?",['n = "Leo"',"n == Leo","string n = Leo"],0,"Use = com aspas.","variável"],["Qual o tipo de '7' (entre aspas)?",["str","int","float"],0,"Aspas viram texto.","tipo"],["int('8') + 2 dá? Digite.",null,"10","int converte texto em número.","tipo"]],
+[["Qual operador faz divisão inteira?",["//","/","%"],0,"// descarta a parte decimal.","operador"],["Quanto é 7 // 2? Digite.",null,"3","7 dividido por 2 = 3 inteiro.","operador"],["Quanto é 7 / 2?",["3.5","3","4"],0,"/ sempre dá float.","operador"],["Para ler um inteiro usamos...",["int(input())","input(int)","number()"],0,"Converta o texto com int().","input"],["Quanto é 2 + 3 * 4? Digite.",null,"14","Multiplicação vem primeiro.","operador"],["'5' + '5' resulta em? Digite.",null,"55","Strings são concatenadas.","conversão"]],
+[["Qual operador significa diferente?",["!=","<>","=!"],0,"!= é diferente.","comparação"],["True and False resulta em?",["False","True","Erro"],0,"and exige os dois verdadeiros.","lógica"],["True or False resulta em?",["True","False","Erro"],0,"or basta um verdadeiro.","lógica"],["Quanto é 5 > 3? Digite.",null,"true","A comparação dá bool.","comparação"],["O else roda quando...",["nenhuma condição anterior é verdadeira","sempre","a condição é True"],0,"É o caso padrão.","else"],["x = 10. Se x > 5 imprime A, senão B. O que imprime? Digite.",null,"a","10 > 5 é verdadeiro.","if"]],
+[["Qual gera 2, 3, 4?",["range(2, 5)","range(2, 4)","range(3)"],0,"O fim não entra.","range"],["Soma de range(4): 0+1+2+3 = ? Digite.",null,"6","Somando dá 6.","range"],["Quantas voltas dá for x in [7, 8, 9]? Digite.",null,"3","Uma volta por item.","for"],["Qual percorre uma lista?",["for item in lista:","loop lista:","each lista:"],0,"Sintaxe do for.","for"],["range(0, 10, 5) gera...",["0, 5","0, 5, 10","5, 10"],0,"Passo 5, o fim não entra.","range"]],
+[["Qual pula para a próxima volta?",["continue","skip","next"],0,"continue pula a volta.","continue"],["i = 0, while i < 3: i += 1. Valor final de i? Digite.",null,"3","Para quando i chega a 3.","while"],["Qual loop é melhor com número de voltas conhecido?",["for","while True","if"],0,"for com range.","for"],["while True sem break é...",["infinito","vazio","ilegal"],0,"Nunca termina sozinho.","break"],["i += 1 equivale a...",["i = i + 1","i = 1","i + 1 = i"],0,"Incrementa o valor.","contador"]],
+[["Para executar a função oi usamos...",["oi()","run oi","def oi"],0,"Chame com parênteses.","chamada"],["Uma função sem return devolve...",["None","0","texto vazio"],0,"None é o padrão.","return"],["def soma(a, b): return a + b. Quanto é soma(2, 3)? Digite.",null,"5","2 + 3.","def"],["Depois do return a função...",["termina","continua","reinicia"],0,"return encerra a função.","return"],["Onde vai o corpo da função?",["Indentado abaixo do def","Na mesma linha sem :","Antes do def"],0,"Indentação define o corpo.","def"]],
+[["Em def f(x), x é um...",["parâmetro","loop","módulo"],0,"Recebe o valor.","parâmetro"],["def f(a, b=3): return a * b. Quanto é f(2)? Digite.",null,"6","b vale 3 por padrão.","padrão"],["f(b=1, a=4) usa argumentos...",["nomeados","padrão","globais"],0,"Passados pelo nome.","parâmetro"],["Variável fora de qualquer função é...",["global","local","privada"],0,"Vale em todo o programa.","escopo"],["Variável criada dentro de g() e usada fora dá...",["NameError","1","None"],0,"Ela é local de g.","escopo"]],
+[["l = [5, 6, 7]. Quanto é l[-1]? Digite.",null,"7","-1 é o último.","índice"],["l[0:2] de [5, 6, 7] é...",["[5, 6]","[5, 6, 7]","[6, 7]"],0,"Fatia sem o fim.","fatiamento"],["Qual método remove um item?",["remove","delete","cut"],0,"remove(valor).","lista"],["Quanto vale len([1, 2, 3, 4])? Digite.",null,"4","len conta itens.","lista"],["Qual ordena a lista?",["sort()","order()","arrange()"],0,"sort() ordena.","lista"]],
+[["d = {'a': 1}. d['b'] sem existir dá...",["KeyError","None","0"],0,"Chave inexistente.","chave"],["Qual retorna só as chaves?",["keys()","names()","ids()"],0,"keys() lista chaves.","chave"],["Quanto é d.get('x', 0) se x não existe? Digite.",null,"0","get usa o padrão.","dicionário"],["Chaves de dicionário podem ser...",["str ou número","só listas","nenhuma"],0,"Precisam ser imutáveis.","chave"],["Qual retorna os valores?",["values()","vals()","data()"],0,"values() lista valores.","items"]],
+[["self representa...",["o próprio objeto","a classe pai","o módulo"],0,"Referência ao objeto.","self"],["Como criar um objeto da classe Gato?",["Gato()","new Gato","Gato.make"],0,"Chame a classe.","class"],["Um atributo guarda...",["dados do objeto","o nome do arquivo","o loop"],0,"Atributos são dados.","atributo"],["Função dentro de uma classe se chama...",["método","módulo","loop"],0,"É um método.","método"],["O primeiro parâmetro de um método é...",["self","this","obj"],0,"Por convenção, self.","self"]],
+[["int('x') dentro de try com except ValueError faz o programa...",["continuar","quebrar","reiniciar"],0,"O erro é tratado.","except"],["Qual erro ocorre em 10 / 0?",["ZeroDivisionError","ValueError","TypeError"],0,"Divisão por zero.","erro"],["Qual bloco guarda código arriscado?",["try","except","finally"],0,"try tenta executar.","try"],["Para lançar um erro usamos...",["raise","throw","error"],0,"raise lança erros.","erro"],["except sem tipo captura...",["qualquer erro","nenhum erro","só ValueError"],0,"Genérico, evite abusar.","except"]]
+];
+const D=[
+`<h4>O que é um programa</h4><p>Um programa é uma lista de instruções que o computador executa de cima para baixo, uma linha por vez. A instrução mais básica é print(): ela escreve na tela o que estiver entre os parênteses.</p><h4>Texto, números e contas</h4><p>Texto precisa de aspas simples ou duplas. Números não levam aspas e podem entrar em contas. Vários itens separados por vírgula saem com um espaço entre eles.</p><pre class="code §">print("Idade:", 15)   # Idade: 15
+print("Ha" * 3)       # HaHaHa
+print(10 - 4)         # 6</pre><h4>Comentários</h4><p>Tudo depois de # é ignorado pelo Python. Use para explicar o que o código faz e para desativar uma linha temporariamente.</p><h4>Erros comuns</h4><ul><li>Esquecer as aspas: print(Olá) dá NameError.</li><li>Não fechar o parêntese ou as aspas.</li><li>Escrever Print com P maiúsculo: o Python diferencia maiúsculas de minúsculas.</li></ul>`,
+`<h4>O que é uma variável</h4><p>É um nome que guarda um valor na memória, como uma caixa etiquetada. Você cria com <b>nome = valor</b> e usa o nome sempre que quiser o valor de volta.</p><h4>Regras para nomes</h4><ul><li>Pode ter letras, números e _, mas não pode começar com número.</li><li>Sem espaços nem hífen: use meu_nome.</li><li>Maiúscula importa: nota e Nota são variáveis diferentes.</li><li>Não use palavras reservadas como if, for e class.</li></ul><h4>Os quatro tipos básicos</h4><p><b>int</b> (inteiro: 7), <b>float</b> (decimal: 7.5), <b>str</b> (texto: "7") e <b>bool</b> (True ou False). Converta com int(), float() e str().</p><pre class="code §">x = 10
+x = x + 5       # agora x vale 15
+a = "3"
+print(int(a) + 1)  # 4</pre><h4>Erros comuns</h4><ul><li>Confundir = (guardar valor) com == (comparar).</li><li>Usar uma variável antes de criá-la.</li><li>Achar que "3" e 3 são a mesma coisa: um é texto, o outro é número.</li></ul>`,
+`<h4>Lendo dados do teclado</h4><p>input("mensagem") pausa o programa e espera a pessoa digitar. O resultado é sempre texto (str), mesmo que digite 42. Para fazer contas, converta com int() ou float().</p><h4>Operadores matemáticos</h4><ul><li><b>+ - *</b> somam, subtraem e multiplicam.</li><li><b>/</b> divide e sempre devolve float (7 / 2 = 3.5).</li><li><b>//</b> divisão inteira (7 // 2 = 3).</li><li><b>%</b> resto da divisão (7 % 2 = 1), ótimo para saber se um número é par.</li><li><b>**</b> potência (2 ** 3 = 8).</li></ul><p>A ordem é a da matemática: primeiro **, depois * / // %, por fim + e -. Parênteses mandam em tudo.</p><pre class="code §">nome = input("Nome: ")
+ano = int(input("Ano de nascimento: "))
+print(f"Olá, {nome}! Você tem {2026 - ano} anos.")</pre><p>O f antes das aspas é uma f-string: o que está entre chaves é calculado e colocado no texto.</p><h4>Erros comuns</h4><ul><li>Somar texto com número: "5" + 2 dá TypeError.</li><li>Esquecer o int() e tentar fazer conta com o resultado do input.</li></ul>`,
+`<h4>Fazendo o programa decidir</h4><p>O if testa uma condição. Se for verdadeira, o bloco indentado roda. Se não, o Python tenta o elif seguinte e, por fim, o else. Apenas um bloco da cadeia é executado.</p><h4>Comparações e lógica</h4><ul><li><b>== != &lt; &gt; &lt;= &gt;=</b> comparam e devolvem True ou False.</li><li><b>and</b>: os dois precisam ser verdadeiros. <b>or</b>: basta um. <b>not</b> inverte.</li></ul><pre class="code §">nota = 7
+if nota &gt;= 7 and nota &lt;= 10:
+    print("Aprovado")
+elif nota &gt;= 5:
+    print("Recuperação")
+else:
+    print("Reprovado")</pre><h4>Regras do bloco</h4><p>A linha do if termina com dois-pontos e o bloco abaixo usa 4 espaços de recuo. Quando o recuo termina, o bloco acaba.</p><h4>Erros comuns</h4><ul><li>Usar = no lugar de == dentro do if.</li><li>Esquecer os dois-pontos.</li><li>Recuo diferente entre linhas: IndentationError.</li><li>Colocar elif depois de else.</li></ul>`,
+`<h4>Repetindo sem copiar código</h4><p>O for percorre uma sequência item por item, rodando o bloco a cada volta. A variável do for recebe o item atual.</p><h4>A função range</h4><ul><li>range(5) gera 0, 1, 2, 3, 4.</li><li>range(2, 6) gera 2, 3, 4, 5. O fim nunca entra.</li><li>range(0, 10, 3) gera 0, 3, 6, 9: o terceiro número é o passo.</li></ul><h4>Percorrendo coisas</h4><p>O for também percorre listas e textos. Um padrão muito usado é o acumulador: uma variável que cresce a cada volta.</p><pre class="code §">total = 0
+for n in range(1, 5):
+    total += n
+print(total)   # 10
+for letra in "abc":
+    print(letra)</pre><h4>Erros comuns</h4><ul><li>Esperar que range(1, 5) inclua o 5.</li><li>Esquecer o dois-pontos ou o recuo.</li><li>Zerar o acumulador dentro do loop em vez de antes dele.</li></ul>`,
+`<h4>Repetir enquanto for verdade</h4><p>O while testa a condição antes de cada volta e só para quando ela virar falsa. Use quando você não sabe quantas voltas serão necessárias, como pedir uma senha até acertar.</p><h4>Os três cuidados</h4><ul><li>Crie a variável de controle antes do loop.</li><li>Altere essa variável dentro do loop (n -= 1, i += 1), senão o loop é infinito.</li><li>break encerra o loop na hora; continue pula para a próxima volta.</li></ul><pre class="code §">while True:
+    senha = input("Senha: ")
+    if senha == "python":
+        print("Acesso liberado")
+        break
+    print("Tente de novo")</pre><h4>for ou while?</h4><p>Se sabe o número de voltas ou tem uma coleção, use for. Se depende de uma condição, use while.</p><h4>Erros comuns</h4><ul><li>Loop infinito por esquecer de atualizar a variável.</li><li>Condição que já começa falsa: o loop nunca roda.</li></ul>`,
+`<h4>Por que usar funções</h4><p>Uma função é um bloco de código com nome. Você escreve uma vez e usa quantas vezes quiser, evitando repetição e deixando o programa organizado.</p><h4>Como criar e chamar</h4><p>Defina com <b>def nome():</b> e coloque o corpo recuado. A função só executa quando você a chama com parênteses.</p><pre class="code §">def area(lado):
+    return lado * lado
+
+resultado = area(4)
+print(resultado)   # 16</pre><h4>return x print</h4><ul><li><b>print</b> só mostra algo na tela.</li><li><b>return</b> devolve o valor para quem chamou, e você pode guardar ou usar em contas.</li><li>Depois do return a função termina. Sem return ela devolve None.</li></ul><h4>Erros comuns</h4><ul><li>Definir a função e esquecer de chamá-la.</li><li>Usar print quando precisava de return.</li><li>Esquecer os dois-pontos ou o recuo.</li></ul>`,
+`<h4>Parâmetros e argumentos</h4><p>Parâmetro é o nome na definição (def f(x)). Argumento é o valor passado na chamada (f(5)). A ordem importa, a não ser que você use o nome: f(b=1, a=2).</p><h4>Valores padrão</h4><p>def f(a, b=2) usa 2 se você não passar b. Parâmetros com padrão ficam depois dos obrigatórios.</p><h4>Vários retornos</h4><p>return a, b devolve dois valores de uma vez, que você recebe assim: x, y = f().</p><h4>Escopo</h4><ul><li>Variável criada dentro da função é local: some quando ela termina.</li><li>Variável criada fora é global e pode ser lida dentro das funções.</li></ul><pre class="code §">def media(a, b=10):
+    m = (a + b) / 2
+    return m
+
+print(media(6))      # 8.0
+print(media(b=2, a=4)) # 3.0</pre><h4>Erros comuns</h4><ul><li>Chamar sem os argumentos obrigatórios: TypeError.</li><li>Tentar usar fora da função uma variável criada dentro dela.</li></ul>`,
+`<h4>Guardando vários itens</h4><p>Lista é uma coleção ordenada e que pode ser alterada: [10, 20, 30]. Pode misturar tipos e repetir valores.</p><h4>Índices e fatias</h4><ul><li>O primeiro item é o índice 0 e o último é -1.</li><li>lista[1:3] pega do índice 1 até o 2 (o fim não entra).</li></ul><h4>Métodos principais</h4><ul><li><b>append(x)</b> adiciona no fim, <b>insert(i, x)</b> na posição i.</li><li><b>remove(x)</b> tira pelo valor, <b>pop(i)</b> tira pela posição.</li><li><b>sort()</b> ordena, <b>len(lista)</b> conta, <b>x in lista</b> verifica.</li></ul><pre class="code §">notas = [7, 9, 5]
+notas.append(10)
+notas.sort()
+print(notas)       # [5, 7, 9, 10]
+print(notas[-1])   # 10
+for n in notas:
+    print(n)</pre><h4>Erros comuns</h4><ul><li>IndexError: pedir um índice que não existe.</li><li>Achar que o primeiro item é o 1.</li></ul>`,
+`<h4>Dados com nome</h4><p>Dicionário guarda pares chave: valor. Em vez de lembrar a posição, você pede pela chave. Chaves são únicas e normalmente textos ou números.</p><h4>Operações</h4><ul><li>d["chave"] lê, e d["chave"] = valor cria ou altera.</li><li>d.get("chave", padrão) lê sem dar erro se faltar.</li><li>"chave" in d verifica se existe, del d["chave"] remove.</li><li>keys(), values() e items() listam chaves, valores e pares.</li></ul><pre class="code §">pessoa = {"nome": "Caio", "idade": 14}
+pessoa["cidade"] = "Recife"
+print(pessoa.get("altura", "?"))  # ?
+for chave, valor in pessoa.items():
+    print(chave, valor)</pre><h4>Erros comuns</h4><ul><li>KeyError ao ler uma chave que não existe: use get().</li><li>Repetir a mesma chave: o último valor sobrescreve o anterior.</li></ul>`,
+`<h4>Moldes e objetos</h4><p>Uma classe descreve como algo é (atributos) e o que faz (métodos). Cada objeto criado a partir dela é uma cópia independente, com seus próprios dados.</p><h4>Peças da classe</h4><ul><li><b>__init__</b> roda automaticamente ao criar o objeto e prepara os atributos.</li><li><b>self</b> é o próprio objeto: self.nome guarda o dado nele.</li><li>Todo método recebe self como primeiro parâmetro.</li></ul><pre class="code §">class Gato:
+    def __init__(self, nome):
+        self.nome = nome
+        self.energia = 5
+    def brincar(self):
+        self.energia -= 1
+
+mimi = Gato("Mimi")
+mimi.brincar()
+print(mimi.energia)   # 4</pre><h4>Erros comuns</h4><ul><li>Esquecer o self na definição ou ao usar um atributo.</li><li>Criar o objeto sem parênteses: Gato em vez de Gato("Mimi").</li></ul>`,
+`<h4>Erros não precisam derrubar o programa</h4><p>Quando algo dá errado, o Python levanta uma exceção e para tudo. Com try/except você prevê o problema e decide o que fazer.</p><h4>Estrutura completa</h4><ul><li><b>try</b>: código que pode falhar.</li><li><b>except Tipo</b>: roda se aquele erro acontecer. Pode haver vários.</li><li><b>else</b>: roda se nada falhou.</li><li><b>finally</b>: roda sempre.</li><li><b>raise</b> lança um erro de propósito.</li></ul><h4>Erros mais comuns</h4><p>ValueError (valor inválido), ZeroDivisionError, KeyError (chave faltando), IndexError (índice fora), TypeError (tipos incompatíveis).</p><pre class="code §">try:
+    n = int(input("Número: "))
+    print(10 / n)
+except ValueError:
+    print("Digite um número")
+except ZeroDivisionError:
+    print("Não divida por zero")
+else:
+    print("Deu certo")</pre><h4>Boa prática</h4><p>Capture o tipo de erro específico. Um except sem tipo esconde bugs.</p>`
+];
+const K=["print","variável","input","if","for","while","def","parâmetro","lista","dicionário","class","try"];
+const FX=[{id:"fx0",n:"Roxo clássico",p:0},{id:"fx1",n:"Neon Matrix",p:50},{id:"fx2",n:"Fogo",p:80},{id:"fx3",n:"Gelo",p:80},{id:"fx5",n:"Ouro",p:120},{id:"fx4",n:"Arco-íris",p:150},{id:"fx6",n:"Plasma",p:200}];
+const ALL=[];let ix=0;
+P.forEach((p,pi)=>p.ls.forEach((l,li)=>{ALL.push({...l,pi,id:pi+"-"+li,q:[...l.q,...X[ix]].map(q=>[q[0],q[1],q[2],q[3],q[4]||K[ix]])});ix++}));
+const TOT=ALL.reduce((a,x)=>a+x.q.length,0);
+const S0={xp:0,coins:0,done:{},streak:0,last:"",days:[],own:["fx0"],fx:"fx0",st:{ok:0,bad:0},kw:{},day:{},hist:[]};
+let S;try{S={...S0,...JSON.parse(localStorage.getItem("pyq")||"{}")}}catch(e){S={...S0}}
+if(!S.own.includes("fx0"))S.own.push("fx0");
+const save=()=>{try{localStorage.setItem("pyq",JSON.stringify(S))}catch(e){}};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");
+const today=()=>new Date().toLocaleDateString("sv");
+const ago=n=>{const d=new Date();d.setDate(d.getDate()-n);return d.toLocaleDateString("sv")};
+const wd=d=>new Date(d+"T12:00").toLocaleDateString("pt-BR",{weekday:"short"}).slice(0,3);
+const streak=()=>S.last===today()||S.last===ago(1)?S.streak:0;
+let view="home",cur=null,qi=0,ok=0,typer,lock=false,ord=[];
+function toast(m){const t=$("#toast");t.textContent=m;t.style.opacity=1;setTimeout(()=>t.style.opacity=0,1800)}
+function topbar(t){return `<div class="top"><div><small>${new Date().toLocaleDateString("pt-BR",{weekday:"long",day:"numeric",month:"long"})}</small><h2>${t}</h2></div><div class="chips"><span>${S.coins} moedas</span><span>${S.xp} XP</span></div></div>`}
+function ring(p,id,sz=96){const r=sz/2-8,c=2*Math.PI*r,m=sz/2;return `<svg width="${sz}" height="${sz}" viewBox="0 0 ${sz} ${sz}"><defs><linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#60a5fa"/><stop offset="1" stop-color="#c084fc"/></linearGradient></defs><circle cx="${m}" cy="${m}" r="${r}" fill="none" stroke="#ffffff14" stroke-width="8"/><circle cx="${m}" cy="${m}" r="${r}" fill="none" stroke="url(#${id})" stroke-width="8" stroke-linecap="round" stroke-dasharray="${c*p/100} ${c}" transform="rotate(-90 ${m} ${m})"/><text x="50%" y="50%" text-anchor="middle" dominant-baseline="central" fill="#fff" font-size="${sz/4.4}" font-weight="600">${p}%</text></svg>`}
+function spark(){const h=S.hist;if(h.length<2)return `<svg class="sp" viewBox="0 0 300 60"><line x1="0" y1="45" x2="300" y2="45" stroke="#ffffff30" stroke-dasharray="4 4"/></svg>`;
+ const v=h.map((_,i)=>{const w=h.slice(Math.max(0,i-4),i+1);return w.reduce((a,b)=>a+b,0)/w.length});
+ const d=v.map((y,i)=>(i?"L":"M")+(i/(v.length-1)*300).toFixed(1)+" "+(52-y*44).toFixed(1)).join("");
+ return `<svg class="sp" viewBox="0 0 300 60" preserveAspectRatio="none"><defs><linearGradient id="sg" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#8b5cf6" stop-opacity=".5"/><stop offset="1" stop-color="#8b5cf6" stop-opacity="0"/></linearGradient></defs><path d="${d}L300 60L0 60Z" fill="url(#sg)"/><path d="${d}" fill="none" stroke="#a78bfa" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>`}
+function words(i){const e=Object.entries(S.kw).filter(x=>x[1][i]>0).sort((a,b)=>b[1][i]-a[1][i]).slice(0,6);
+ if(!e.length)return `<small>Responda tarefas para ver este gráfico.</small>`;const m=e[0][1][i];
+ return e.map(([k,v])=>`<div class="wr"><span>${esc(k)}</span><div class="tr2 ${i?"":"g"}"><i style="width:${v[i]/m*100}%"></i></div><small>${v[i]} de ${v[0]+v[1]}</small></div>`).join("")}
+function week(){const v=[];let m=1;for(let n=6;n>=0;n--){const d=ago(n),c=S.day[d]||0;m=Math.max(m,c);v.push([d,c])}
+ return `<div class="wb">`+v.map(([d,c])=>`<div class="col"><span class="v">${c||""}</span><div class="tr"><i style="height:${c/m*100}%"></i></div><small>${wd(d)}</small></div>`).join("")+`</div>`}
+function home(){
+ const tot=S.st.ok+S.st.bad,pc=tot?Math.round(S.st.ok/tot*100):0,er=tot?100-pc:0;
+ const nd=ALL.filter(x=>S.done[x.id]).reduce((a,x)=>a+x.q.length,0),nx=ALL.find(x=>!S.done[x.id]);
+ const hr=new Date().getHours(),g=hr<12?"Bom dia":hr<18?"Boa tarde":"Boa noite";
+ let dots="";for(let n=6;n>=0;n--)dots+=`<i class="${S.days.includes(ago(n))?"on":""}"></i>`;
+ const pr=P.map((p,pi)=>{const l=ALL.filter(x=>x.pi==pi),d=l.filter(x=>S.done[x.id]).length,pp=Math.round(d/l.length*100);return `<div class="wr" style="grid-template-columns:1fr auto"><span>${p.p}</span><small>${d}/${l.length}</small></div><div class="bar"><i style="width:${pp}%"></i></div>`}).join("");
+ return topbar("Painel")+`<div class="grid">
+ <div class="c w2"><span class="pill">${new Date().toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"})}</span><small>${g},</small><div class="hello">${["Novato","Aprendiz","Praticante","Desenvolvedor","Pythonista"][Math.min(4,Math.floor(ALL.filter(x=>S.done[x.id]).length/3))]}</div><small>Continue focado e programe todo dia.</small>${spark()}<small>Evolução do seu acerto nas últimas respostas</small></div>
+ <div class="c w2"><h3>Acertos e erros</h3><div class="ae">${ring(pc,"r1")}<div><p>Acertos: <b>${S.st.ok}</b> (${pc}%)</p><p>Erros: <b>${S.st.bad}</b> (${er}%)</p><p><small>${tot} respostas no total</small></p></div></div><div class="stk"><i style="width:${pc}%"></i><b style="width:${er}%"></b></div></div>
+ <div class="c"><small>Sequência</small><div class="num">${streak()}<span> dias</span></div><small>Últimos 7 dias</small><div class="dots">${dots}</div></div>
+ <div class="c"><small>Tarefas concluídas</small><div class="num">${nd}<span>/${TOT}</span></div><div class="bar"><i style="width:${nd/TOT*100}%"></i></div><small>${Math.round(nd/TOT*100)}% do curso</small></div>
+ <div class="c w2"><h3>Palavras que você mais erra</h3><small>Conceitos com mais respostas erradas</small>${words(1)}</div>
+ <div class="c w2"><h3>Palavras que você mais acerta</h3>${words(0)}</div>
+ <div class="c w2"><h3>Atividade da semana</h3><small>Tarefas respondidas por dia</small>${week()}</div>
+ <div class="c w2"><h3>Progresso por trilha</h3>${pr}</div>
+ <div class="c w2">${nx?`<small>Próxima lição</small><h3>${nx.t}</h3><button class="btn" onclick="lesson('${nx.id}')">Continuar</button>`:`<h3>Você concluiu todas as lições.</h3><small>Repita as lições para treinar seus pontos fracos.</small>`}</div></div>`}
+function paths(){return topbar("Trilhas")+`<div class="grid"><div class="c w2"><h3>Seu caminho de aprendizado</h3><small>Siga em ordem: cada nível prepara o próximo.</small>`+P.map((p,pi)=>{const l=ALL.filter(x=>x.pi==pi),d=l.filter(x=>S.done[x.id]).length;return `<div class="wr" style="grid-template-columns:1fr auto"><span>${LV[pi]}</span><small>${d}/${l.length}</small></div><div class="bar"><i style="width:${d/l.length*100}%"></i></div>`}).join("")+`</div>`+P.map((p,pi)=>`<div class="c w2"><small>${LV[pi]}</small><h3>${p.p}</h3><small>${p.d}</small>`+ALL.filter(x=>x.pi==pi).map(x=>{const i=ALL.indexOf(x),open=i==0||S.done[ALL[i-1].id],d=S.done[x.id];
+ return `<button class="row ${d?"dn":""}" ${open?"":"disabled"} onclick="lesson('${x.id}')"><span class="ck"></span><span>${ALL.indexOf(x)+1}. ${x.t}<br><small>${x.q.length} tarefas</small></span><em class="${d?"s1":open?"s2":"s3"}">${d?"Concluída":open?"Em andamento":"Bloqueada"}</em></button>`}).join("")+`</div>`).join("")+`</div>`}
+function shop(){return topbar("Loja")+`<div class="grid"><div class="c w2"><h3>Efeitos de digitação</h3><small>Mudam a cor e o brilho do código nas lições.</small></div>`+FX.map(f=>{const own=S.own.includes(f.id),eq=S.fx===f.id;
+ return `<div class="c it ${eq?"eq":""}"><b>${f.n}</b><pre class="code ${f.id}">print("Olá")</pre><button class="btn sm" ${eq?"disabled":""} onclick="act('${f.id}')">${eq?"Equipado":own?"Equipar":"Comprar por "+f.p}</button></div>`}).join("")+`</div>`}
+function act(id){const it=FX.find(x=>x.id==id);
+ if(!S.own.includes(id)){if(S.coins<it.p){toast("Moedas insuficientes. Faça mais tarefas.");return}S.coins-=it.p;S.own.push(id);toast("Comprado")}
+ S.fx=id;save();draw()}
+function intro(){return topbar("Lição")+`<div class="c"><small>${P[cur.pi].p}</small><h3>${cur.t}</h3><p>${cur.e}</p><div class="ex">${D[ALL.indexOf(cur)].replace(/§/g,S.fx)}<h4>Veja funcionando</h4><small>Toque no código para pular a animação.</small><pre id="code" class="code ${S.fx}"></pre><button class="btn" style="background:#ffffff14" onclick="tryCode()">Testar este código no terminal</button><h4>Antes de continuar</h4><p>Leia de novo as regras e os erros comuns. Nas tarefas você vai usar tudo isso.</p></div><button class="btn" onclick="view='quiz';draw()">Já entendi, fazer as tarefas (${cur.q.length})</button></div>`}
+const R=(a,b)=>a+Math.floor(Math.random()*(b-a+1)),pk=a=>a[R(0,a.length-1)],pyl=a=>"["+a.join(", ")+"]",ar=(n,a,b)=>Array.from({length:n},()=>R(a,b));
+const mc=(c,d)=>[String(c),...[...new Set(d.map(String))].filter(x=>x!==String(c))].slice(0,4);
+const W=["python","codigo","dragao","teclado","variavel","funcao","programa","logica","loop","objeto","string","lista"],TF=["True","False"],tf=x=>x?"True":"False";
+const LV=["Nível 1 · Iniciante","Nível 2 · Básico","Nível 3 · Intermediário","Nível 4 · Avançado","Nível 5 · Expert"];
+const NEED={"Texto":"0-1","Matemática":"0-2","Lógica":"1-0","Listas e dicionários":"3-1","Misto":"3-1"},LN=Object.fromEntries(ALL.map(x=>[x.id,x.t]));
+const GR={
+"Matemática":[
+()=>{const a=R(2,30),b=R(2,9),o=pk(["+","-","*","//","%"]),v=o=="+"?a+b:o=="-"?a-b:o=="*"?a*b:o=="//"?Math.floor(a/b):a%b;return [`Quanto é ${a} ${o} ${b}? Digite.`,null,String(v),"Calcule com a regra do operador.","operador"]},
+()=>{const a=R(2,9),b=R(2,4);return [`Quanto é ${a} ** ${b}? Digite.`,null,String(a**b),"** é potência.","operador"]},
+()=>{const a=R(0,5),b=R(a+2,a+8);let s=0;for(let i=a;i<b;i++)s+=i;return [`Qual a soma dos números de range(${a}, ${b})? Digite.`,null,String(s),"O fim do range não entra.","range"]},
+()=>{const a=R(0,4),c=R(2,4),b=R(a+6,a+16);let n=0;for(let i=a;i<b;i+=c)n++;return [`Quantas voltas dá for i in range(${a}, ${b}, ${c})? Digite.`,null,String(n),`Do ${a} até antes do ${b}, de ${c} em ${c}.`,"range"]},
+()=>{const k=R(2,5),c=R(1,9),a=R(1,9);return [`def f(x): return x * ${k} + ${c}. Quanto é f(${a})? Digite.`,null,String(a*k+c),"Troque x pelo argumento.","def"]},
+()=>{const n0=R(5,15),s=R(2,4);let n=n0;while(n>0)n-=s;return [`n = ${n0}. Enquanto n > 0, faça n -= ${s}. Qual o valor final de n? Digite.`,null,String(n),"O loop para quando n deixa de ser positivo.","while"]},
+()=>{const n=R(2,40);return [`${n} % 2 == 0 resulta em?`,TF,n%2==0?0:1,"Par tem resto 0 na divisão por 2.","operador"]}],
+"Texto":[
+()=>{const w=pk(W);return [`Quanto vale len("${w}")? Digite.`,null,String(w.length),"len conta os caracteres.","string"]},
+()=>{const w=pk(W),i=R(0,w.length-1);return [`O que é "${w}"[${i}]? Digite.`,null,w[i],"O índice começa em 0.","índice"]},
+()=>{const w=pk(W);return [`O que é "${w}"[-1]? Digite.`,null,w[w.length-1],"-1 é o último caractere.","índice"]},
+()=>{const w=pk(W).slice(0,2),n=R(2,4);return [`O que mostra print("${w}" * ${n})? Digite.`,null,w.repeat(n),"Multiplicar texto repete.","string"]},
+()=>{const w=pk(W);return [`O que devolve "${w}".upper()?`,mc(w.toUpperCase(),[w,w[0].toUpperCase()+w.slice(1),w.toUpperCase().split("").reverse().join("")]),0,"upper() deixa tudo em maiúsculas.","string"]},
+()=>{const w=pk(W),l=pk(w.split(""));return [`Quantas vezes "${l}" aparece em "${w}" com count? Digite.`,null,String(w.split(l).length-1),"count conta as ocorrências.","string"]},
+()=>{const a=R(1,9),b=R(1,9);return [`a = ${a}, b = ${b}. O que mostra print(f"{a}+{b}={a+b}")? Digite.`,null,`${a}+${b}=${a+b}`,"A f-string troca as chaves pelos valores.","f-string"]},
+()=>{const a=R(1,9),b=R(1,9);return [`O que mostra print("${a}" + "${b}")? Digite.`,null,`${a}${b}`,"Strings são juntadas, não somadas.","conversão"]},
+()=>{const [v,t]=pk([["42","int"],["3.14","float"],['"oi"',"str"],["True","bool"],["[1, 2]","list"],["{'a': 1}","dict"],["7 / 2","float"],["7 // 2","int"],['"7"',"str"]]);return [`Qual o tipo de ${v}?`,mc(t,["int","float","str","bool","list","dict"].filter(x=>x!==t).sort(()=>Math.random()-.5).slice(0,3)),0,"Use type() para conferir.","tipo"]}],
+"Listas e dicionários":[
+()=>{const a=ar(5,1,20),i=R(0,4);return [`l = ${pyl(a)}. Quanto é l[${i}]? Digite.`,null,String(a[i]),"Índices começam em 0.","índice"]},
+()=>{const a=ar(R(3,6),1,20);return [`Quanto é max(${pyl(a)})? Digite.`,null,String(Math.max(...a)),"max devolve o maior.","lista"]},
+()=>{const a=ar(R(3,5),1,9);return [`Quanto é sum(${pyl(a)})? Digite.`,null,String(a.reduce((x,y)=>x+y)),"sum soma todos.","lista"]},
+()=>{const a=ar(5,1,9),i=R(0,3),j=R(i+1,5);return [`l = ${pyl(a)}. O que é l[${i}:${j}]?`,mc(pyl(a.slice(i,j)),[pyl(a.slice(i,Math.min(5,j+1))),pyl(a.slice(i+1,j)),pyl(a.slice(Math.max(0,i-1),j))]),0,"Fatia: o fim não entra.","fatiamento"]},
+()=>{const a=ar(R(2,5),1,9);return [`l = ${pyl(a)}. Depois de l.append(${R(1,9)}) e l.append(${R(1,9)}), quanto vale len(l)? Digite.`,null,String(a.length+2),"Cada append adiciona 1 item.","lista"]},
+()=>{const a=ar(R(3,5),1,9);return [`l = ${pyl(a)}. Depois de l.pop(), quanto vale len(l)? Digite.`,null,String(a.length-1),"pop remove o último item.","lista"]},
+()=>{const a=ar(R(3,5),1,30),s=[...a].sort((x,y)=>x-y);return [`Depois de l.sort() com l = ${pyl(a)}, quanto vale l[0]? Digite.`,null,String(s[0]),"Ordenada, o primeiro é o menor.","lista"]},
+()=>{const ks=["a","b","c","d"].sort(()=>Math.random()-.5).slice(0,3),d={};ks.forEach(k=>d[k]=R(1,9));const k=pk(["a","b","c","d"]);return [`d = {${ks.map(x=>`'${x}': ${d[x]}`).join(", ")}}. Quanto é d.get('${k}', 0)? Digite.`,null,String(d[k]??0),"get devolve o padrão se a chave não existe.","dicionário"]}],
+"Lógica":[
+()=>{const a=R(1,9),b=R(1,9),o=pk([">","<","==","!=",">=","<="]),v={">":a>b,"<":a<b,"==":a==b,"!=":a!=b,">=":a>=b,"<=":a<=b}[o];return [`${a} ${o} ${b} resulta em?`,TF,v?0:1,"Compare os dois números.","comparação"]},
+()=>{const A=pk([true,false]),B=pk([true,false]),o=pk(["and","or"]);return [`${tf(A)} ${o} ${tf(B)} resulta em?`,TF,(o=="and"?A&&B:A||B)?0:1,"and exige os dois; or basta um.","lógica"]},
+()=>{const A=pk([true,false]);return [`not ${tf(A)} resulta em?`,TF,A?1:0,"not inverte o valor.","lógica"]},
+()=>{const n=R(0,100),r=n>=70?"A":n>=40?"B":"C";return [`n = ${n}. Se n >= 70 imprime A, elif n >= 40 imprime B, senão C. O que imprime?`,["A","B","C"],"ABC".indexOf(r),"Só o primeiro teste verdadeiro roda.","elif"]},
+()=>{const n=R(1,30),d=pk([3,5]);return [`${n} % ${d} == 0 resulta em?`,TF,n%d==0?0:1,"Divisível quando o resto é 0.","operador"]}]};
+function gen(g,n=10){const pool=g=="Misto"?Object.values(GR).flat():GR[g],o=[],seen=new Set();let t=0;while(o.length<n&&t++<80){const i=R(0,pool.length-1),q=pool[i]();q.d=i;if(!seen.has(q[0])){seen.add(q[0]);o.push(q)}}return o.sort((a,b)=>a.d-b.d)}
+function train(g){cur={id:"t",t:"Treino: "+g,pi:0,q:gen(g)};qi=0;ok=0;view="quiz";draw()}
+function trainPg(){return topbar("Treino")+`<div class="grid"><div class="c w2"><h3>Treino infinito</h3><small>Mais de 1000 tarefas diferentes, geradas na hora com números e palavras novos. Cada sessão tem 10 tarefas, do fácil ao difícil. Os modos liberam conforme você avança nas lições.</small></div>`+["Texto","Matemática","Lógica","Listas e dicionários","Misto"].map(g=>`<div class="c"><h3>${g}</h3>${S.done[NEED[g]]?`<button class="btn sm" onclick="train('${g}')">Começar</button>`:`<small>Conclua a lição: ${LN[NEED[g]]}</small>`}</div>`).join("")+`</div>`}
+let TC='nome = "Python"\nfor i in range(3):\n    print("Olá,", nome, i)\n',TI="",TO="",OUT=[],INQ=[],GC=0;
+const EX=[TC,'def dobro(x):\n    return x * 2\n\nlista = [1, 2, 3]\nfor n in lista:\n    print(n, "x 2 =", dobro(n))\n','n = int(input("Número: "))\nif n % 2 == 0:\n    print(n, "é par")\nelse:\n    print(n, "é ímpar")\n'],EXI=["","","4"];
+const dp=(o,m)=>Object.entries(m).forEach(([k,f])=>Object.defineProperty(o,k,{value:f,writable:true,configurable:true}));
+const _sort=Array.prototype.sort,_rep=String.prototype.replace;
+dp(Array.prototype,{append(x){this.push(x)},insert(i,x){this.splice(i,0,x)},extend(a){this.push(...a)},remove(x){const i=this.indexOf(x);if(i<0)throw new Error("ValueError: valor não está na lista");this.splice(i,1)},count(x){return this.filter(y=>y===x).length},index(x){return this.indexOf(x)},pop(i){return i===undefined?this.splice(this.length-1,1)[0]:this.splice(i<0?this.length+i:i,1)[0]},sort(f){return _sort.call(this,f||((a,b)=>a<b?-1:a>b?1:0))}});
+dp(String.prototype,{upper(){return this.toUpperCase()},lower(){return this.toLowerCase()},title(){return this.replace(/\b\w/g,c=>c.toUpperCase())},strip(){return this.trim()},count(s){return this.split(s).length-1},join(a){return [...a].join(this)},startswith(s){return this.startsWith(s)},endswith(s){return this.endsWith(s)},find(s){return this.indexOf(s)},replace(a,b){return typeof a=="string"?this.split(a).join(b):_rep.call(this,a,b)}});
+dp(Object.prototype,{items(){return Object.entries(this)},keys(){return Object.keys(this)},values(){return Object.values(this)},get(k,d){return k in this?this[k]:d}});
+const rp=(v,r)=>v===true?"True":v===false?"False":v==null?"None":typeof v=="string"?(r?"'"+v+"'":v):Array.isArray(v)?"["+v.map(x=>rp(x,1)).join(", ")+"]":typeof v=="function"?"<function>":typeof v=="object"?"{"+Object.entries(v).map(([k,x])=>rp(k,1)+": "+rp(x,1)).join(", ")+"}":String(v);
+const B={print:(...a)=>{OUT.push(a.map(x=>rp(x)).join(" "))},len:x=>x.length??Object.keys(x).length,
+range:(a,b,c=1)=>{if(b===undefined){b=a;a=0}const o=[];for(let i=a;c>0?i<b:i>b;i+=c){o.push(i);if(o.length>1e6)throw new Error("MemoryError: range grande demais")}return o},
+int:x=>{const n=parseInt(x,10);if(isNaN(n))throw new Error("ValueError: invalid literal for int() with base 10: '"+x+"'");return n},
+float:x=>{const n=Number(x);if(isNaN(n)||x==="")throw new Error("ValueError: could not convert string to float: '"+x+"'");return n},
+str:x=>rp(x),input:p=>{const v=INQ.length?INQ.shift():"";OUT.push((p||"")+v);return v},
+max:(...a)=>Math.max(...(a.length==1?a[0]:a)),min:(...a)=>Math.min(...(a.length==1?a[0]:a)),sum:a=>a.reduce((x,y)=>x+y,0),abs:Math.abs,
+round:(x,n=0)=>Math.round(x*10**n)/10**n,sorted:a=>[...a].sort(),list:x=>[...x],
+type:x=>"<class '"+({number:Number.isInteger(x)?"int":"float",string:"str",boolean:"bool",object:x===null?"NoneType":Array.isArray(x)?"list":"dict"}[typeof x]||"function")+"'>",
+__in:(x,c)=>typeof c=="string"||Array.isArray(c)?c.includes(x):x in c,__it:x=>typeof x=="string"||Array.isArray(x)?x:Object.keys(x),
+__fl:(a,b)=>Math.floor(a/b),__g:()=>{if(++GC>300000)throw new Error("Loop infinito interrompido (mais de 300000 voltas)")},Math};
+function tk(l){const st=[];let o="",i=0;while(i<l.length){const c=l[i];if(c=="#")break;
+ if(c=='"'||c=="'"){const f=/[fF]/.test(l[i-1]||"")&&!/\w/.test(l[i-2]||" ");let j=i+1;while(j<l.length&&l[j]!=c){if(l[j]=="\\")j++;j++}
+  let s=l.slice(i,j+1);if(f){o=o.slice(0,-1);s="`"+s.slice(1,-1).replace(/`/g,"\\`").replace(/\{/g,"${")+"`"}
+  o+="\u0001"+st.length+"\u0001";st.push(s);i=j+1;continue}
+ o+=c;i++}return [o,st]}
+const xp=t=>t.replace(/([\w.\u0001]+(?:\([^()]*\))?)\s+not\s+in\s+([\w.\u0001\[\]]+(?:\([^()]*\))?)/g,"!__in($1,$2)").replace(/\bTrue\b/g,"true").replace(/\bFalse\b/g,"false").replace(/\bNone\b/g,"null").replace(/\band\b/g,"&&").replace(/\bor\b/g,"||").replace(/\bnot\s+/g,"!")
+ .replace(/\blambda\s*([\w,\s]*):\s*/g,"($1)=>")
+ .replace(/([\w.\u0001]+(?:\([^()]*\))?|\([^()]*\))\s*\/\/\s*([\w.\u0001]+(?:\([^()]*\))?|\([^()]*\))/g,"__fl($1,$2)")
+ .replace(/([\w.\u0001]+(?:\([^()]*\))?)\s+in\s+([\w.\u0001\[\]]+(?:\([^()]*\))?)/g,"__in($1,$2)")
+ .replace(/([\w)\]]+)\[(-?\w*):(-?\w*)\]/g,(m,a,b,c)=>`${a}.slice(${b||0}${c?","+c:""})`)
+ .replace(/([\w)\]]+)\[(-\d+)\]/g,"$1.at($2)");
+function tp(code){const out=[],stk=[0],ty=[];let pend=false;
+ for(const raw of code.replace(/\t/g,"    ").split("\n")){
+  const [t0,st]=tk(raw),t=t0.replace(/\s+$/,"");if(!t.trim())continue;
+  const ind=t.match(/^ */)[0].length,s=t.trim(),rs=x=>x.replace(/\u0001(\d+)\u0001/g,(_,i)=>st[i]);
+  if(pend){stk.push(ind);pend=false}
+  while(ind<stk[stk.length-1]){stk.pop();out.push(ty.pop()=="d"?"};":"}")}
+  let r,m;
+  if(s.endsWith(":")){const h=s.slice(0,-1).trim();let k="b";
+   if(m=h.match(/^(if|while)\s+(.+)$/))r=m[1]=="while"?`while(__g(),${xp(m[2])}){`:`if(${xp(m[2])}){`;
+   else if(m=h.match(/^elif\s+(.+)$/))r=`else if(${xp(m[1])}){`;
+   else if(h=="else")r="else{";
+   else if(m=h.match(/^for\s+(.+?)\s+in\s+(.+)$/))r=`for(let ${m[1].includes(",")?"["+m[1]+"]":m[1]} of __it(${xp(m[2])})){`;
+   else if(m=h.match(/^def\s+(\w+)\s*\((.*)\)$/)){r=`${m[1]}=function(${m[2]}){`;k="d"}
+   else if(h=="try")r="try{";
+   else if(m=h.match(/^except\b(?:.*?\bas\s+(\w+))?.*$/))r=`catch(${m[1]||"__e"}){`;
+   else if(h=="finally")r="finally{";
+   else throw new Error("SyntaxError: ainda não suportado no terminal: "+raw.trim());
+   ty.push(k);pend=true;out.push(rs(r));continue}
+  if(s=="pass"||/^(import|from)\s/.test(s))r="";
+  else if(s=="break"||s=="continue")r=s+";";
+  else if(m=s.match(/^return\b\s*(.*)$/))r="return "+xp(m[1])+";";
+  else if(m=s.match(/^raise\s+(\w+)\((.*)\)$/))r=`throw new Error("${m[1]}: "+(${xp(m[2])||'""'}));`;
+  else if(m=s.match(/^del\s+(.+)$/))r="delete "+xp(m[1])+";";
+  else if(m=s.match(/^([\w\s]+,[\w\s,]+?)=\s*([^=].*)$/))r=`[${m[1]}]=[${xp(m[2])}];`;
+  else r=xp(s)+";";
+  out.push(rs(r))}
+ while(ty.length)out.push(ty.pop()=="d"?"};":"}");return out.join("\n")}
+function runPy(){OUT=[];GC=0;INQ=TI?TI.split("\n"):[];
+ try{const js=tp(TC),sc={},px=new Proxy(sc,{has:(t,k)=>typeof k=="string",get:(t,k)=>{if(typeof k!="string")return undefined;if(k in t)return t[k];if(k in B)return B[k];throw new Error("NameError: name '"+k+"' is not defined")},set:(t,k,v)=>(t[k]=v,true)});
+  new Function("__s","with(__s){"+js+"\n}")(px);
+  if(/input\s*\(/.test(TC)&&!TI)OUT.push("(dica: escreva as entradas do input no campo abaixo do editor)")}
+ catch(e){OUT.push("Erro: "+(e.message||e))}
+ TO=OUT.join("\n");draw();const o=$("#to");if(o)o.scrollIntoView({block:"nearest"})}
+function tab(e){if(e.key=="Tab"){e.preventDefault();const t=e.target,s=t.selectionStart;t.value=t.value.slice(0,s)+"    "+t.value.slice(t.selectionEnd);t.selectionStart=t.selectionEnd=s+4;TC=t.value}}
+function tryCode(){TC=cur.c;TO="";TI="";view="term";draw()}
+function termPg(){return topbar("Terminal")+`<div class="c mb"><h3>Editor Python</h3><small>Escreva código e toque em Executar. Aceita print, variáveis, if, for, while, def, listas, dicionários, input e try/except.</small><textarea id="ed" spellcheck="false" autocapitalize="off" oninput="TC=this.value" onkeydown="tab(event)">${esc(TC)}</textarea><small>Entradas do input(), uma por linha (opcional)</small><textarea id="ip" rows="2" spellcheck="false" oninput="TI=this.value">${esc(TI)}</textarea><div style="display:flex;gap:8px"><button class="btn" onclick="runPy()">Executar</button><button class="btn" style="background:#ffffff14" onclick="TC='';TI='';TO='';draw()">Limpar</button></div><div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap"><small>Exemplos:</small>${["Loop","Função","Entrada"].map((n,i)=>`<button class="btn sm" style="background:#ffffff14;margin:0" onclick="TC=EX[${i}];TI=EXI[${i}];TO='';draw()">${n}</button>`).join("")}</div></div><div class="c term"><small>Terminal</small><pre id="to">${esc("$ python main.py\n"+TO)}</pre></div>`}
+function quiz(){const q=cur.q[qi];ord=q[1]?q[1].map((_,i)=>i).sort(()=>Math.random()-.5):[];
+ return topbar("Tarefas")+`<div class="bar"><i style="width:${qi/cur.q.length*100}%"></i></div><div class="c"><small>Tarefa ${qi+1} de ${cur.q.length}</small><h3>${esc(q[0])}</h3>`+
+ (q[1]?ord.map((o,j)=>`<button class="op" onclick="ans(${j})">${esc(q[1][o])}</button>`).join(""):`<input id="in" placeholder="Digite a resposta" autocomplete="off"><button class="btn" onclick="ans()">Responder</button>`)+`<div id="fb"></div></div>`}
+function ans(j){if(lock)return;const q=cur.q[qi];let r;
+ if(q[1]){r=ord[j]===q[2];const b=document.querySelectorAll(".op");b[j].classList.add(r?"ok":"bad");b[ord.indexOf(q[2])].classList.add("ok")}
+ else{const v=$("#in").value.trim().toLowerCase().replace(/^['"]|['"]$/g,"");if(!v)return;r=v===String(q[2])}
+ lock=true;if(r)ok++;
+ S.st[r?"ok":"bad"]++;const k=S.kw[q[4]]=S.kw[q[4]]||[0,0];k[r?0:1]++;S.day[today()]=(S.day[today()]||0)+1;S.hist=[...S.hist,r?1:0].slice(-40);save();
+ $("#fb").innerHTML=`<div class="fb"><b>${r?"Certo! +5 moedas":"Resposta: "+esc(q[1]?q[1][q[2]]:q[2])}</b><br>${esc(q[3])}</div><button class="btn" onclick="nextQ()">${qi+1>=cur.q.length?"Finalizar":"Próxima"}</button>`}
+function nextQ(){qi++;if(qi>=cur.q.length)finish();else draw()}
+function finish(){const f=!S.done[cur.id];cur.gc=ok*5+(f?20:0);cur.gx=ok*10+(f?20:0);S.coins+=cur.gc;S.xp+=cur.gx;S.done[cur.id]=1;
+ const t=today();if(S.last!==t){S.streak=S.last===ago(1)?S.streak+1:1;S.last=t;S.days=[...S.days.filter(d=>d!==t),t].slice(-30)}
+ save();view="done";draw()}
+function done(){const p=Math.round(ok/cur.q.length*100);return topbar("Lição concluída")+`<div class="c" style="text-align:center"><div style="display:grid;place-items:center">${ring(p,"r2",130)}</div><h3 style="margin-top:10px">Você acertou ${ok} de ${cur.q.length}</h3><p>+${cur.gx} XP e +${cur.gc} moedas<br><small>Sequência: ${streak()} dia(s)</small></p><button class="btn" onclick="go('home')">Ver painel</button><button class="btn" style="background:#ffffff14" onclick="go('paths')">Voltar às trilhas</button></div>`}
+function typeIt(el,t){let i=0;el.classList.add("cur");const end=()=>{clearInterval(typer);el.textContent=t;el.classList.remove("cur")};
+ el.onclick=end;typer=setInterval(()=>{el.textContent=t.slice(0,++i);if(i>=t.length)end()},24)}
+function lesson(id){cur=ALL.find(x=>x.id===id);qi=0;ok=0;view="intro";draw()}
+function go(v){view=v;draw()}
+function draw(){clearInterval(typer);lock=false;
+ $("#app").innerHTML=({home,paths,shop,intro,quiz,done,train:trainPg,term:termPg}[view])();
+ const a=view=="term"?"term":view=="home"?"home":view=="shop"?"shop":view=="train"||(["quiz","done"].includes(view)&&cur.id=="t")?"train":"paths";
+ ["home","paths","train","term","shop"].forEach(n=>$("#n-"+n).classList.toggle("on",n==a));
+ if(view=="intro")typeIt($("#code"),cur.c);
+ window.scrollTo(0,0)}
+draw();
+</script>
+</body>
+</html>
