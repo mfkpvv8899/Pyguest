@@ -20,20 +20,30 @@ jobs:
       - name: Baixar o código
         uses: actions/checkout@v4
 
+      - name: Listar arquivos na raiz (Debug)
+        run: ls -la
+
       - name: Instalar Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
       - name: Conferir se o index.html existe
-        run: test -f index.html
+        run: |
+          if [ ! -f index.html ]; then
+            echo "::error::index.html NÃO encontrado na raiz do repositório!"
+            echo "Certifique-se de que o arquivo foi enviado para o GitHub (não apenas deixado no celular)."
+            exit 1
+          fi
+          echo "index.html encontrado com sucesso!"
 
       - name: Validar o JavaScript do app
         run: |
           node -e "
-          const h = require('fs').readFileSync('index.html', 'utf8');
+          const fs = require('fs');
+          const h = fs.readFileSync('index.html', 'utf8');
           const m = h.match(/<script>([\s\S]*)<\/script>/);
-          if (!m) throw new Error('Nenhum <script> encontrado no index.html');
+          if (!m) throw new Error('Nenhum bloco <script> encontrado no index.html');
           new Function(m[1]);
           console.log('JavaScript sem erros de sintaxe');
           "
@@ -42,7 +52,14 @@ jobs:
         run: |
           mkdir -p dist
           cp index.html dist/index.html
-          cd dist && zip -r ../pyquest.zip .
+          cd dist
+          
+          if ! command -v zip &> /dev/null; then
+            sudo apt-get update && sudo apt-get install -y zip
+          fi
+          
+          zip -r ../pyquest.zip .
+          cd ..
 
       - name: Guardar o zip como artefato
         uses: actions/upload-artifact@v4
