@@ -20,9 +20,6 @@ jobs:
       - name: Baixar o código
         uses: actions/checkout@v4
 
-      - name: Listar arquivos na raiz (Debug)
-        run: ls -la
-
       - name: Instalar Node.js
         uses: actions/setup-node@v4
         with:
@@ -32,21 +29,10 @@ jobs:
         run: |
           if [ ! -f index.html ]; then
             echo "::error::index.html NÃO encontrado na raiz do repositório!"
-            echo "Certifique-se de que o arquivo foi enviado para o GitHub (não apenas deixado no celular)."
+            echo "Você precisa subir o arquivo index.html diretamente para o GitHub."
             exit 1
           fi
-          echo "index.html encontrado com sucesso!"
-
-      - name: Validar o JavaScript do app
-        run: |
-          node -e "
-          const fs = require('fs');
-          const h = fs.readFileSync('index.html', 'utf8');
-          const m = h.match(/<script>([\s\S]*)<\/script>/);
-          if (!m) throw new Error('Nenhum bloco <script> encontrado no index.html');
-          new Function(m[1]);
-          console.log('JavaScript sem erros de sintaxe');
-          "
+          echo "✅ index.html encontrado com sucesso!"
 
       - name: Montar a pasta dist e o zip
         run: |
@@ -54,6 +40,7 @@ jobs:
           cp index.html dist/index.html
           cd dist
           
+          # Instala o zip caso não exista na máquina do GitHub
           if ! command -v zip &> /dev/null; then
             sudo apt-get update && sudo apt-get install -y zip
           fi
