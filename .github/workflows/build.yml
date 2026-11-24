@@ -20,13 +20,24 @@ jobs:
       - name: Baixar o código
         uses: actions/checkout@v4
 
+      # --- PASSO ADICIONADO PARA DEBUG ---
+      - name: Listar arquivos na raiz (Debug)
+        run: ls -la
+
       - name: Instalar Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
+      # --- VERIFICAÇÃO FLEXÍVEL ---
+      # Em vez de quebrar o build, apenas avisa se não achar na raiz
       - name: Conferir se o index.html existe
-        run: test -f index.html
+        run: |
+          if [ ! -f index.html ]; then
+            echo "::warning::index.html NÃO encontrado na raiz do repositório!"
+            echo "Verifique se o arquivo está em outra pasta ou se o nome está correto."
+            exit 1
+          fi
 
       - name: Validar o JavaScript do app
         run: |
@@ -42,7 +53,12 @@ jobs:
         run: |
           mkdir -p dist
           cp index.html dist/index.html
-          cd dist && zip -r ../pyquest.zip .
+          cd dist
+          # Verifica se o comando zip existe, se não, instala
+          if ! command -v zip &> /dev/null; then
+            sudo apt-get update && sudo apt-get install -y zip
+          fi
+          zip -r ../pyquest.zip .
 
       - name: Guardar o zip como artefato
         uses: actions/upload-artifact@v4
